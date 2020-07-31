@@ -12,7 +12,11 @@
     "compile-ts": "tsc",
     "compile-static": "cp ./src/frontend/index.html ./dist/frontend/index.html && cp ./src/frontend/static/main.css ./dist/frontend/static/main.css",
     "watch-ts": "nodemon -e ts --exec \"yarn compile-ts\"",
-    "watch-static": "nodemon -e html,css --exec \"yarn compile-static\""
+    "watch-static": "nodemon -e html,css --exec \"yarn compile-static\"",
+    "postinstall": "npm run compile-ts && npm run compile-static"
+  },
+  "engines": {
+    "node": "13.8.0"
   },
   "dependencies": {
     "axios": "^0.19.2",
