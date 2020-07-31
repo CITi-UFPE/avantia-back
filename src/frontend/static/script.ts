@@ -23,7 +23,7 @@ const renderFilter = (
       class="filter"
       style="
         ${Object.entries(pos).map(([key, value]) => `${key}:${value}px;`).join('')}
-        border-color: ${label === 'mask' ? 'green' : 'red'};
+        border-color: ${label === 'mask' ? '#7cff7c' : '#ff7c7c'};
       "
     >
       <div class="prob">${probability.toFixed(2)}</div>
@@ -75,7 +75,11 @@ const createFilters = (filters: ServerResponse[]) => {
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
 
-      canvas.getContext('2d').drawImage(video, 0, 0);
+      const ctx = canvas.getContext('2d');
+
+      ctx.translate(video.videoWidth, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0);
 
       canvas.toBlob((blob) => {
         const formData = new FormData();

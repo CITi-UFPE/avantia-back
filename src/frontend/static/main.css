@@ -26,4 +26,5 @@ body, html {
 
 .video-container video {
   width: 100%;
+  transform: scaleX(-1);
 }
