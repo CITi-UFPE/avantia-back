@@ -28,7 +28,6 @@ const middleware = session({
     secure: false,
     maxAge: 20 * 1000,
   },
-  genid: (req) => req.connection.remoteAddress,
   store,
   resave: true,
   saveUninitialized: false,
