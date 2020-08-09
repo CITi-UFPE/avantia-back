@@ -25,7 +25,7 @@ const middleware = session({
   cookie: {
     httpOnly: true,
     path: '/',
-    secure: false,
+    secure: true,
     maxAge: 20 * 1000,
   },
   store,
