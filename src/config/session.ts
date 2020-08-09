@@ -25,12 +25,13 @@ const middleware = session({
   cookie: {
     httpOnly: true,
     path: '/',
-    secure: true,
-    maxAge: 5 * 1000,
+    secure: false,
+    maxAge: 20 * 1000,
   },
+  genid: (req) => req.connection.remoteAddress,
   store,
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
 });
 
 export default ({
