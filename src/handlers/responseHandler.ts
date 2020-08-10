@@ -7,6 +7,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     status,
     type,
     neuralNetLatency,
+    expiringDate,
   } = res.locals;
 
   if (!message && !data) {
@@ -26,6 +27,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     message,
     data,
     neuralNetLatency,
+    expiringDate,
   };
 
   res.status(status || 200).json(response);

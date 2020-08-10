@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import helmet from 'helmet';
-import path from 'path';
 import morgan from 'morgan';
+import http from 'http';
 
 // ============ Local Imports ============ //
 
@@ -11,7 +11,12 @@ import {
   requestHandler,
   errorHandler,
   responseHandler,
+  sessionHandler,
 } from './handlers';
+
+import { storeInjector } from './injectors';
+
+import { session } from './config';
 
 import routes from './routes';
 
@@ -23,13 +28,20 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+const server = new http.Server(app);
+
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+}));
 app.use(helmet());
 app.use(express.json());
+app.use(session.middleware);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
-app.use('/static', express.static(path.join(__dirname, './frontend/static')));
+app.use(storeInjector(session.store));
 
+app.use(sessionHandler);
 app.use(requestHandler);
 
 app.use(routes);
@@ -40,6 +52,6 @@ app.use(responseHandler);
 // ============ Run the Server ============ //
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running at port ${PORT}`);
 });
