@@ -32,7 +32,7 @@ const server = new http.Server(app);
 
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:3000',
+  origin: 'https://avantia-dev.netlify.app',
 }));
 app.use(helmet());
 app.use(express.json());
