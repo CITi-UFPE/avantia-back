@@ -30,7 +30,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     expiringDate,
   };
 
-  res.set('Access-Control-Allow-Origin', 'https://avantia-dev.netlify.app/analitico')
+  res.set('Access-Control-Allow-Origin', 'https://avantia-dev.netlify.app')
 
   res.status(status || 200).json(response);
 };
