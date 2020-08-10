@@ -9,8 +9,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
     const expiringDate = req.session.expires;
 
     if (Date.now() > expiringDate.getTime()) {
-      res.locals.status = 403;
-      return next('Session expired');
+      // res.locals.status = 403;
+      // return next('Session expired');
     }
 
     if (req.session.lastAccess && req.session.stopped) {
