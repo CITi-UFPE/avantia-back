@@ -14,6 +14,8 @@ import {
   sessionHandler,
 } from './handlers';
 
+import { storeInjector } from './injectors';
+
 import { session } from './config';
 
 import routes from './routes';
@@ -28,11 +30,16 @@ const app = express();
 
 const server = new http.Server(app);
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+}));
 app.use(helmet());
 app.use(express.json());
 app.use(session.middleware);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+
+app.use(storeInjector(session.store));
 
 app.use(sessionHandler);
 app.use(requestHandler);

@@ -9,7 +9,6 @@ const MongoDBStore = mongoStoreGen(session);
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: 'sessions',
-  expires: 1000 * 20,
 });
 
 store.on('error', (err) => {
@@ -25,12 +24,14 @@ const middleware = session({
   cookie: {
     httpOnly: true,
     path: '/',
-    secure: true,
-    maxAge: 20 * 1000,
+    secure: false,
+    expires: new Date(Date.now() + 20 * 60 * 1000),
   },
   store,
-  resave: true,
-  saveUninitialized: false,
+  genid: (req) => req.connection.remoteAddress,
+  resave: false,
+  rolling: true,
+  saveUninitialized: true,
 });
 
 export default ({

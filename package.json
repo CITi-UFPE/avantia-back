@@ -9,9 +9,9 @@
   "private": true,
   "scripts": {
     "start": "node -r source-map-support/register .",
-    "compile": "tsc",
+    "compile": "tsc && yarn start",
     "watch": "nodemon -e ts --exec \"yarn compile\"",
-    "postinstall": "npm run compile"
+    "postinstall": "tsc"
   },
   "engines": {
     "node": "13.8.0"
