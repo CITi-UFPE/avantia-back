@@ -8,12 +8,13 @@ export default (req: Request, res: Response, next: NextFunction) => {
 
     const expiringDate = req.session.expires;
 
-    if (Date.now() > expiringDate.getTime()) {
+    if (expiringDate && Date.now() > new Date(expiringDate).getTime()) {
       // res.locals.status = 403;
       // return next('Session expired');
     }
 
     if (req.session.lastAccess && req.session.stopped) {
+      console.log(expiringDate);
       const timeSinceLastAccess = Date.now() - req.session.lastAccess;
       const newExpiringDate = new Date(expiringDate.getTime() + timeSinceLastAccess);
       req.session.expires = newExpiringDate;

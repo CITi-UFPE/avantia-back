@@ -28,6 +28,7 @@ const middleware = session({
     expires: new Date(Date.now() + 20 * 60 * 1000),
   },
   genid: (req) => req.connection.remoteAddress,
+  store,
   resave: false,
   rolling: true,
   saveUninitialized: true,

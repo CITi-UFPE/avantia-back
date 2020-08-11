@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import session = require('express-session');
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const {
@@ -30,7 +31,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     expiringDate,
   };
 
-  res.set('Access-Control-Allow-Origin', 'https://avantia-dev.netlify.app')
+  res.set('Access-Control-Allow-Origin', process.env.CLIENT_URL)
 
   res.status(status || 200).json(response);
 };

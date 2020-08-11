@@ -11,7 +11,6 @@ import {
   requestHandler,
   errorHandler,
   responseHandler,
-  sessionHandler,
 } from './handlers';
 
 import { storeInjector } from './injectors';
@@ -32,7 +31,7 @@ const server = new http.Server(app);
 
 app.use(cors({
   credentials: true,
-  origin: 'https://avantia-dev.netlify.app',
+  origin: process.env.CLIENT_URL,
 }));
 app.use(helmet());
 app.use(express.json());
@@ -41,7 +40,6 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 
 app.use(storeInjector(session.store));
 
-app.use(sessionHandler);
 app.use(requestHandler);
 
 app.use(routes);
@@ -50,9 +48,6 @@ app.use(errorHandler);
 app.use(responseHandler);
 
 // ============ Run the Server ============ //
-
-session.store.clear();
-console.log('cleared!');
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
