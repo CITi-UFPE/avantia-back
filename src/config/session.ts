@@ -1,5 +1,5 @@
 import session from 'express-session';
-import mongoStoreGen from 'connect-mongodb-session';
+import mongoStoreGen from 'connect-mongo';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -7,27 +7,25 @@ dotenv.config();
 const MongoDBStore = mongoStoreGen(session);
 
 const store = new MongoDBStore({
-  uri: process.env.MONGO_URI,
-  collection: 'sessions',
+  url: process.env.MONGO_URI,
+  autoRemove: 'disabled',
+  collection: 'avantia-sessions',
+  secret: process.env.SECRET,
 });
 
-store.on('error', (err) => {
-  console.log(err);
-});
-
-store.on('connect', () => {
-  console.log('Successfully connected with database');
-});
+store.all((arr, sessions) => {
+  console.log(sessions);
+});;
 
 const middleware = session({
   secret: process.env.SECRET,
   cookie: {
     httpOnly: true,
     path: '/',
-    secure: false,
+    secure: process.env.SECURE === 'true',
     expires: new Date(Date.now() + 20 * 60 * 1000),
   },
-  genid: (req) => req.connection.remoteAddress,
+  genid: (req) => req.ip,
   store,
   resave: false,
   rolling: true,
