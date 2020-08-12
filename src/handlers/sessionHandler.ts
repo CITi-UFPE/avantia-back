@@ -14,9 +14,8 @@ export default (req: Request, res: Response, next: NextFunction) => {
     }
 
     if (req.session.lastAccess && req.session.stopped) {
-      console.log(expiringDate);
       const timeSinceLastAccess = Date.now() - req.session.lastAccess;
-      const newExpiringDate = new Date(expiringDate.getTime() + timeSinceLastAccess);
+      const newExpiringDate = new Date(new Date(expiringDate).getTime() + timeSinceLastAccess);
       req.session.expires = newExpiringDate;
       res.locals.expiringDate = newExpiringDate;
     } else {
@@ -31,6 +30,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
         if (!err && session && Date.now() - session.lastAccess > 10000) {
           session.stopped = true;
           res.locals.store.set(req.sessionID, session);
+          console.log('"stopped"')
         }
       });
     }, 10000);
