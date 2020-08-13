@@ -13,15 +13,23 @@ import {
   responseHandler,
 } from './handlers';
 
+import deleteFiles from './helpers/deleteFiles';
+
 import { storeInjector } from './injectors';
 
-import { session } from './config';
+import { createSession, connection } from './config';
 
 import routes from './routes';
 
 // ============ Config ============ //
 
 dotenv.config();
+
+const { middleware: sessionMiddleware, store } = createSession(connection);
+
+// ============ File Cleanup ============ //
+
+deleteFiles();
 
 // ============ Application ============ //
 
@@ -35,10 +43,10 @@ app.use(cors({
 }));
 app.use(helmet());
 app.use(express.json());
-app.use(session.middleware);
+app.use(sessionMiddleware);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
-app.use(storeInjector(session.store));
+app.use(storeInjector(store));
 
 app.use(requestHandler);
 
