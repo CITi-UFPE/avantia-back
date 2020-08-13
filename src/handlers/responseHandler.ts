@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import session = require('express-session');
+import path from 'path';
 
 export default async (req: Request, res: Response, next: NextFunction) => {
   const {
@@ -7,8 +7,8 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     data,
     status,
     type,
-    neuralNetLatency,
     expiringDate,
+    isError,
   } = res.locals;
 
   if (!message && !data) {
@@ -20,18 +20,18 @@ export default async (req: Request, res: Response, next: NextFunction) => {
   }
 
   if (type === 'file') {
-    res.status(status || 200).sendFile(data);
+    res.status(status || 200).sendFile(path.join(__dirname, data));
     return;
   }
 
   const response = {
+    isError,
     message,
-    data,
-    neuralNetLatency,
     expiringDate,
+    data,
   };
 
-  res.set('Access-Control-Allow-Origin', process.env.CLIENT_URL)
+  res.set('Access-Control-Allow-Origin', process.env.CLIENT_URL);
 
   res.status(status || 200).json(response);
 };
