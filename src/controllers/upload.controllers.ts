@@ -6,10 +6,15 @@ export const post = async (req: Request, res: Response, next: NextFunction) => {
     const fileId = req.file.filename.split('-')[0];
     const extension = req.file.filename.split('.')[1];
 
+    let fileType = 'unknown';
+
+    if (extension === 'png') fileType = 'image';
+    if (extension === 'mp4') fileType = 'video';
+
     res.locals.message = 'Data stored';
     res.locals.data = {
       fileId,
-      fileType: extension === 'png' ? 'image' : 'video',
+      fileType,
     }
     next();
   } catch (err) {
