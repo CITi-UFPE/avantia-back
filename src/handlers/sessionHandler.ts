@@ -30,7 +30,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
         if (!err && session && Date.now() - session.lastAccess > 10000) {
           session.stopped = true;
           res.locals.store.set(req.sessionID, session);
-          console.log('"stopped"')
         }
       });
     }, 10000);

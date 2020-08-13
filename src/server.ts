@@ -13,6 +13,8 @@ import {
   responseHandler,
 } from './handlers';
 
+import deleteFiles from './helpers/deleteFiles';
+
 import { storeInjector } from './injectors';
 
 import { createSession, connection } from './config';
@@ -24,6 +26,10 @@ import routes from './routes';
 dotenv.config();
 
 const { middleware: sessionMiddleware, store } = createSession(connection);
+
+// ============ File Cleanup ============ //
+
+deleteFiles();
 
 // ============ Application ============ //
 

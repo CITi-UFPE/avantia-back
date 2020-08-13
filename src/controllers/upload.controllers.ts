@@ -13,7 +13,6 @@ export const post = async (req: Request, res: Response, next: NextFunction) => {
     }
     next();
   } catch (err) {
-    console.log(err);
     return next(err);
   }
 };

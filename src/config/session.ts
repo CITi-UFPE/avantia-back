@@ -15,10 +15,6 @@ const createSession = (connection: Connection) => {
     secret: process.env.SECRET,
   });
 
-  store.all((arr, sessions) => {
-    console.log(sessions);
-  });;
-
   const middleware = session({
     secret: process.env.SECRET,
     cookie: {
