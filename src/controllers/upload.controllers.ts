@@ -41,9 +41,19 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
 
     const targetFile = files[fileIds.indexOf(fileName)];
 
-    res.locals.type = 'file';
-    res.locals.data = `../../uploads/${targetFile}`;
+    const content = fs.readFileSync(`uploads/${targetFile}`, { encoding: 'base64' });
+    const extension = targetFile.split('.')[1];
 
+    let fileType = 'unknown';
+
+    if (extension === 'png') fileType = 'image';
+    if (extension === 'mp4') fileType = 'video';
+
+    res.locals.message = 'File found';
+    res.locals.data = {
+      content,
+      type: fileType,
+    };
     next();
   } catch (err) {
     return next(err);
