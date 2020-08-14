@@ -10,7 +10,7 @@ export const post = async (req: Request, res: Response, next: NextFunction) => {
     let fileType = 'unknown';
 
     if (extension === 'png') fileType = 'image';
-    if (extension === 'mp4') fileType = 'video';
+    if (extension === 'webm') fileType = 'video';
 
     res.locals.message = 'Data stored';
     res.locals.data = {
@@ -48,7 +48,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
     let fileType = 'unknown';
 
     if (extension === 'png') fileType = 'image';
-    if (extension === 'mp4') fileType = 'video';
+    if (extension === 'webm') fileType = 'video';
 
     res.locals.message = 'File found';
     res.locals.data = {
