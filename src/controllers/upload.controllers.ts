@@ -31,8 +31,8 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
       return next('File not found');
     }
 
-    if (!fs.existsSync('uploads/')) {
-      fs.mkdirSync('uploads/');
+    if (!fs.existsSync('../../../uploads/')) {
+      fs.mkdirSync('../../../uploads/');
     }
 
     const files = fs.readdirSync('uploads');
@@ -45,7 +45,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
 
     const targetFile = files[fileIds.indexOf(fileName)];
 
-    const content = fs.readFileSync(`uploads/${targetFile}`, { encoding: 'base64' });
+    const content = fs.readFileSync(`../../../uploads/${targetFile}`, { encoding: 'base64' });
     const extension = targetFile.split('.')[1];
 
     let fileType = 'unknown';
