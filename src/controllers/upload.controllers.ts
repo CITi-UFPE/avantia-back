@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
+import path from 'path';
 
 export const post = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -31,11 +32,8 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
       return next('File not found');
     }
 
-    if (!fs.existsSync('../../../uploads/')) {
-      fs.mkdirSync('../../../uploads/');
-    }
-
     const files = fs.readdirSync('uploads');
+    console.log(files);
     const fileIds = files.map((fileName) => fileName.split('-')[0]);
 
     if (fileIds.indexOf(fileName) === -1) {
@@ -45,7 +43,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
 
     const targetFile = files[fileIds.indexOf(fileName)];
 
-    const content = fs.readFileSync(`../../../uploads/${targetFile}`, { encoding: 'base64' });
+    const content = fs.readFileSync(path.join(__dirname, `uploads/${targetFile}`), { encoding: 'base64' });
     const extension = targetFile.split('.')[1];
 
     let fileType = 'unknown';
