@@ -31,6 +31,10 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
       return next('File not found');
     }
 
+    if (!fs.existsSync('uploads/')) {
+      fs.mkdirSync('uploads/');
+    }
+
     const files = fs.readdirSync('uploads');
     const fileIds = files.map((fileName) => fileName.split('-')[0]);
 
