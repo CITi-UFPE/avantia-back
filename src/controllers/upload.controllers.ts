@@ -33,7 +33,6 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const files = fs.readdirSync('uploads');
-    console.log(files);
     const fileIds = files.map((fileName) => fileName.split('-')[0]);
 
     if (fileIds.indexOf(fileName) === -1) {
@@ -43,7 +42,7 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
 
     const targetFile = files[fileIds.indexOf(fileName)];
 
-    const content = fs.readFileSync(path.join(__dirname, `uploads/${targetFile}`), { encoding: 'base64' });
+    const content = fs.readFileSync(`uploads/${targetFile}`, { encoding: 'base64' });
     const extension = targetFile.split('.')[1];
 
     let fileType = 'unknown';
