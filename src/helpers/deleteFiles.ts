@@ -12,7 +12,7 @@ const deleteFiles = () => {
         const fileName = file.split('.')[0];
         const fileUploadTime = fileName.split('-')[1];
 
-        if (Date.now() - Number(fileUploadTime) > hours * 60 * 1000) {
+        if (Date.now() - Number(fileUploadTime) > hours * 60 * 60 * 1000) {
           fs.unlinkSync(`${targetFolder}/${file}`);
         }
       });
