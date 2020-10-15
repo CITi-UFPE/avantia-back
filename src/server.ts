@@ -44,6 +44,7 @@ app.use(cors({
 app.use(helmet());
 app.use(express.json());
 app.use(sessionMiddleware);
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 app.use(storeInjector(store));

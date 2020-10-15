@@ -32,7 +32,7 @@ export const post =  async (req: Request, res: Response, next: NextFunction) => 
     const before = Date.now();
 
     const neuralNetResponse = await axios.post(
-      'https://ia-mask.grupoavantia.com.br',
+      'https://ia-common.grupoavantia.com.br',
       formData,
       { headers: formData.getHeaders() },
     );
