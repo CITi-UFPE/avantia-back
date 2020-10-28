@@ -9,6 +9,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     type,
     expiringDate,
     isError,
+    neuralNetLatency,
   } = res.locals;
 
   if (!message && !data) {
@@ -29,6 +30,7 @@ export default async (req: Request, res: Response, next: NextFunction) => {
     message,
     expiringDate,
     data,
+    neuralNetLatency,
   };
 
   res.set('Access-Control-Allow-Origin', process.env.CLIENT_URL);
