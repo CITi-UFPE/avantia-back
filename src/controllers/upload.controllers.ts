@@ -2,6 +2,8 @@ import { Request, Response, NextFunction } from 'express';
 import fs from 'fs';
 import path from 'path';
 
+import { Media } from '../models';
+
 export const post = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const fileId = req.file.filename.split('-')[0];
@@ -11,6 +13,12 @@ export const post = async (req: Request, res: Response, next: NextFunction) => {
 
     if (extension === 'png') fileType = 'image';
     if (extension === 'webm') fileType = 'video';
+
+    await Media.create({
+      userId: res.locals.user._id,
+      fileName: `uploads/${fileId}`,
+      fileType,
+    });
 
     res.locals.message = 'Data stored';
     res.locals.data = {

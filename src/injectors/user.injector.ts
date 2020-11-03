@@ -12,7 +12,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       res.locals.user = users[0];
     }
 
-    console.log(res.locals.user);
     return next();
   } catch (err) {
     return next(err);

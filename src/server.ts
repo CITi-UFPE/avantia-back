@@ -16,7 +16,7 @@ import {
 
 import deleteFiles from './helpers/deleteFiles';
 
-import { storeInjector, userInjector } from './injectors';
+import { storeInjector } from './injectors';
 
 import { createSession } from './config';
 
@@ -62,7 +62,6 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 app.use(storeInjector(store));
-app.use(userInjector);
 
 app.use(requestHandler);
 

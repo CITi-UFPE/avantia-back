@@ -3,7 +3,7 @@ import fs from 'fs';
 const deleteFiles = () => {
   const targetFolder = 'uploads';
   const hours = Number(process.env.FILE_LIFETIME);
-  const interval = process.env.CHECK_FILES_INTERVAL;
+  const interval =  Number(process.env.CHECK_FILES_INTERVAL);
 
   if (fs.existsSync(targetFolder)) {
     setInterval(() => {
@@ -16,7 +16,7 @@ const deleteFiles = () => {
           fs.unlinkSync(`${targetFolder}/${file}`);
         }
       });
-    }, Number(interval) * 1000);
+    }, interval * 1000);
   }
 }
 

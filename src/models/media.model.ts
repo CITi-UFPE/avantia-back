@@ -2,14 +2,18 @@ import { Schema, model, Document } from 'mongoose';
 
 export interface IMedia extends Document {
   userId: string;
-  folderName: string;
+  fileName: string;
+  fileType: string;
 }
 
 const mediaSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId, required: true,
   },
-  folderName: {
+  fileName: {
+    type: String, required: true,
+  },
+  fileType: {
     type: String, required: true,
   }
 }, {
