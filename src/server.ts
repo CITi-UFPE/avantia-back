@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import http from 'http';
+import mongoose from 'mongoose';
 
 // ============ Local Imports ============ //
 
@@ -15,11 +16,24 @@ import {
 
 import deleteFiles from './helpers/deleteFiles';
 
-import { storeInjector } from './injectors';
+import { storeInjector, userInjector } from './injectors';
 
-import { createSession, connection } from './config';
+import { createSession } from './config';
 
 import routes from './routes';
+
+// ================ MONGO DB ================ //
+
+mongoose.connect(process.env.MONGO_URL || process.env.MONGO_URI, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const { connection } = mongoose;
+
+connection.on('error', () => console.log('Failed to establish connection with MongoDB'));
+connection.once('open', () => console.log('MongoDB connection established sucessfully'));
 
 // ============ Config ============ //
 
@@ -48,6 +62,7 @@ app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 
 app.use(storeInjector(store));
+app.use(userInjector);
 
 app.use(requestHandler);
 
